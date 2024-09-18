@@ -112,6 +112,10 @@ class Api implements ConsumesPixApi
             $client->withOptions([
                 'cert' => $this->getCertificate(),
             ]);
+        }else{
+            $client->withOptions([
+                'verify' => false
+            ]);
         }
 
         $client->withToken($this->oauthToken);
