@@ -114,7 +114,8 @@ class Api implements ConsumesPixApi
             ]);
         }else{
             $client->withOptions([
-                'verify' => false
+                'verify' => false,
+                'cert' => $this->getCertificate()
             ]);
         }
 
