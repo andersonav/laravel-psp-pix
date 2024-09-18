@@ -42,6 +42,10 @@ class Auth implements AuthenticatesPSPs
                 'verify' => $this->certificate,
                 'cert'   => $this->getCertificate(),
             ]);
+        }else{
+            $client->withOptions([
+                'verify' => false
+            ]);
         }
 
         return $client->post($this->getOauthEndpoint(), [
