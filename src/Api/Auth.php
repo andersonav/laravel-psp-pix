@@ -11,6 +11,7 @@ class Auth implements AuthenticatesPSPs
     protected string $clientId;
     protected string $clientSecret;
     protected string $certificate;
+    protected string $certificateKey;
     protected string $currentPspOauthEndpoint;
     protected ?string $certificatePassword;
 
@@ -18,12 +19,14 @@ class Auth implements AuthenticatesPSPs
         string $clientId,
         string $clientSecret,
         string $certificate,
+        string $certificateKey,
         string $currentPspOauthEndpoint,
         ?string $certificatePassword
     ) {
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
         $this->certificate = $certificate;
+        $this->certificateKey = $certificateKey;
         $this->currentPspOauthEndpoint = $currentPspOauthEndpoint;
         $this->certificatePassword = $certificatePassword;
     }
@@ -39,13 +42,15 @@ class Auth implements AuthenticatesPSPs
 
         if ($this->shouldVerifySslCertificate()) {
             $client->withOptions([
-                'verify' => $this->certificate,
+                'verify' => true,
                 'cert'   => $this->getCertificate(),
+                'ssl_key'=> $this->getCertificateKey()
             ]);
         }else{
             $client->withOptions([
                 'verify' => false,
-                'cert'   => $this->getCertificate()
+                'cert'   => $this->getCertificate(),
+                'ssl_key'=> $this->getCertificateKey()
             ]);
         }
 
@@ -60,6 +65,13 @@ class Auth implements AuthenticatesPSPs
         return $this->certificatePassword ?? false
                 ? [$this->certificate, $this->certificatePassword]
                 : $this->certificate;
+    }
+
+    protected function getCertificateKey()
+    {
+        return $this->certificatePassword ?? false
+                ? [$this->certificateKey, $this->certificatePassword]
+                : $this->certificateKey;
     }
 
     private function shouldVerifySslCertificate(): bool

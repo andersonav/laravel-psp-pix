@@ -54,6 +54,11 @@ class Psp
         return $this->getPspConfig($this->getCurrentPsp())['ssl_certificate'] ?? '';
     }
 
+    public function getPspSSLKeyCertificate(): string
+    {
+        return $this->getPspConfig($this->getCurrentPsp())['ssl_key_certificate'] ?? '';
+    }
+
     public function getPspCertificatePassword(): string
     {
         return $this->getPspConfig($this->getCurrentPsp())['certificate_password'] ?? '';

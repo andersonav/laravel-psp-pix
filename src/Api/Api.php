@@ -15,6 +15,7 @@ class Api implements ConsumesPixApi
     protected string $clientId;
     protected string $clientSecret;
     protected string $certificate;
+    protected string $certificateKey;
     protected ?string $certificatePassword = null;
     protected ?string $oauthToken;
     protected array $additionalParams = [];
@@ -28,6 +29,7 @@ class Api implements ConsumesPixApi
 
         $this->oauthToken($this->psp->getPspOauthBearerToken())
             ->certificate($this->psp->getPspSSLCertificate())
+            ->certificateKey($this->psp->getPspSSLKeyCertificate())
             ->certificatePassword($this->psp->getPspCertificatePassword())
             ->baseUrl($this->psp->getPspBaseUrl())
             ->clientId($this->psp->getPspClientId())
@@ -62,6 +64,13 @@ class Api implements ConsumesPixApi
         return $this;
     }
 
+    public function certificateKey(string $certificateKey): Api
+    {
+        $this->certificateKey = $certificateKey;
+
+        return $this;
+    }
+
     public function certificatePassword(string $certificatePassword): Api
     {
         $this->certificatePassword = $certificatePassword;
@@ -82,6 +91,8 @@ class Api implements ConsumesPixApi
 
         $this->oauthToken($this->psp->getPspOauthBearerToken())
             ->certificate($this->psp->getPspSSLCertificate())
+            ->certificateKey($this->psp->getPspSSLKeyCertificate())
+            ->certificatePassword($this->psp->getPspCertificatePassword())
             ->baseUrl($this->psp->getPspBaseUrl())
             ->clientId($this->psp->getPspClientId())
             ->clientSecret($this->psp->getPspClientSecret());
@@ -111,12 +122,15 @@ class Api implements ConsumesPixApi
 
         if ($this->shouldVerifySslCertificate()) {
             $client->withOptions([
-                'cert' => $this->getCertificate(),
+                'verify'    => true,
+                'cert'      => $this->getCertificate(),
+                'ssl_key'   => $this->getCertificateKey()
             ]);
         }else{
             $client->withOptions([
-                'verify' => false,
-                'cert' => $this->getCertificate()
+                'verify'    => false,
+                'cert'      => $this->getCertificate(),
+                'ssl_key'   => $this->getCertificateKey()
             ]);
         }
 
@@ -132,6 +146,13 @@ class Api implements ConsumesPixApi
                 : $this->certificate;
     }
 
+    protected function getCertificateKey()
+    {
+        return $this->certificatePassword ?? false
+                ? [$this->certificateKey, $this->certificatePassword]
+                : $this->certificateKey;
+    }
+
     public function getOauth2Token(string $scopes = null)
     {
         $authentication_class = $this->getPsp()->getAuthenticationClass();
@@ -140,6 +161,7 @@ class Api implements ConsumesPixApi
             'clientId'                => $this->clientId,
             'clientSecret'            => $this->clientSecret,
             'certificate'             => $this->certificate,
+            'certificateKey'          => $this->certificateKey,
             'certificatePassword'     => $this->certificatePassword,
             'currentPspOauthEndpoint' => $this->psp->getOauthTokenUrl(),
         ])->getToken();
