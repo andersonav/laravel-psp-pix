@@ -44,7 +44,8 @@ class Auth implements AuthenticatesPSPs
             ]);
         }else{
             $client->withOptions([
-                'verify' => false
+                'verify' => false,
+                'cert'   => $this->getCertificate()
             ]);
         }
 

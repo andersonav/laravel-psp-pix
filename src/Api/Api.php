@@ -28,6 +28,7 @@ class Api implements ConsumesPixApi
 
         $this->oauthToken($this->psp->getPspOauthBearerToken())
             ->certificate($this->psp->getPspSSLCertificate())
+            ->certificatePassword($this->psp->getPspCertificatePassword())
             ->baseUrl($this->psp->getPspBaseUrl())
             ->clientId($this->psp->getPspClientId())
             ->clientSecret($this->psp->getPspClientSecret());
