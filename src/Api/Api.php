@@ -164,7 +164,7 @@ class Api implements ConsumesPixApi
             'certificateKey'          => $this->certificateKey,
             'certificatePassword'     => $this->certificatePassword,
             'currentPspOauthEndpoint' => $this->psp->getOauthTokenUrl(),
-        ])->getToken();
+        ])->getToken($scopes);
     }
 
     public function withAdditionalParams(array $params): Api
