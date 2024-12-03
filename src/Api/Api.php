@@ -188,7 +188,13 @@ class Api implements ConsumesPixApi
 
     protected function getEndpoint(string $endpoint): string
     {
-        return $endpoint.'?'.http_build_query($this->additionalParams);
+        $strEndPoint = $endpoint;
+
+        if(count($this->additionalParams) > 0){
+            $strEndPoint = $endpoint.'?'.http_build_query($this->additionalParams);
+        }
+
+        return $strEndPoint;
     }
 
     private function shouldVerifySslCertificate(): bool
