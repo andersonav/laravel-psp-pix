@@ -10,8 +10,8 @@
         "pix-api"
     ],
     "require": {
-        "php": "^8.0",
-        "mpdf/qrcode": "^1.1",
+        "php": "^8.0|^8.2|^8.3|^8.4",
+        "mpdf/qrcode": "^1.2",
         "symfony/psr-http-message-bridge": "^7.1"
     },
     "require-dev": {

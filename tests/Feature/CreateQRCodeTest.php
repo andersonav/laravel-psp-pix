@@ -27,7 +27,7 @@ class CreateQRCodeTest extends TestCase
 
         $response = $this->json('GET', 'laravel-psp-pix/pix/create', [
             'key'           => $this->randomKey,
-            'merchant_name' => 'Mateus Alves',
+            'merchant_name' => 'Anderson Alves',
         ]);
 
         $responseArray = is_array($response->decodeResponseJson())
@@ -40,7 +40,7 @@ class CreateQRCodeTest extends TestCase
 
         $response = $this->json('GET', 'laravel-psp-pix/pix/create', [
             'key'           => $this->randomKey,
-            'merchant_name' => 'Mateus Alves',
+            'merchant_name' => 'Anderson Alves',
             'merchant_city' => 'Ponta Grossa',
         ]);
 
@@ -71,7 +71,7 @@ class CreateQRCodeTest extends TestCase
             'key'            => $this->randomKey,
             'transaction_id' => Str::random(),
             'merchant_city'  => 'Ponta Grossa',
-            'merchant_name'  => 'Mateus Alves',
+            'merchant_name'  => 'Anderson Alves',
             'amount'         => '10.00',
         ]);
 
@@ -88,7 +88,7 @@ class CreateQRCodeTest extends TestCase
             'key'            => $this->randomKey,
             'transaction_id' => Str::random(),
             'merchant_city'  => 'Ponta Grossa',
-            'merchant_name'  => 'Mateus Alves',
+            'merchant_name'  => 'Anderson Alves',
             'description'    => 'Test description',
             'amount'         => '10.00',
         ]);

@@ -25,7 +25,7 @@
     "type": "git",
     "url": "git+https://github.com/andersonav/laravel-trackable-jobs.git"
   },
-  "author": "Mateus Alves",
+  "author": "Anderson Alves",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/andersonav/laravel-trackable-jobs/issues"
