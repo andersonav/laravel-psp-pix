@@ -37,8 +37,6 @@ class Webhook extends Api implements ConsumesWebhookEndpoints, FilterApiRequests
 
         if(is_array($webhook)){
             event(new WebhookCreatedEvent($webhook->json()));
-        }else{
-            $webhook = [];
         }
 
         return $webhook;
